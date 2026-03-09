@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBuddy AI - Your Personal Trainer</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Bada aur modern container */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 900px; /* Isse form screen par bada dikhega */
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            display: flex;
+            overflow: hidden; /* Andar ka content bahar na nikle */
+        }
+
+        /* Left side - Branding */
+        .left-panel {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            color: white;
+            padding: 50px 40px;
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-panel h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .left-panel p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Right side - Form */
+        .right-panel {
+            padding: 50px 40px;
+            width: 55%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 15px;
+            background: #f9f9f9;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #667eea;
+            outline: none;
+            background: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background: #667eea;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            background: #5a6fd6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Mobile phones ke liye responsive design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .left-panel, .right-panel {
+                width: 100%;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    
+    <div class="left-panel">
+        <h1>💪 FitBuddy AI</h1>
+        <p>Your personal AI fitness coach. Tell us about yourself, and we'll generate a custom 7-day workout and nutrition plan powered by advanced AI.</p>
+    </div>
+
+    <div class="right-panel">
+        <h2>Let's Get Started</h2>
+        <form action="/generate" method="post">
+            
+            <div class="input-group">
+                <input type="text" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div style="display: flex; gap: 15px;">
+                <div class="input-group" style="flex: 1;">
+                    <input type="number" name="age" placeholder="Age" required>
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <input type="number" step="0.1" name="weight" placeholder="Weight (kg)" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="goal" placeholder="Goal (e.g., Muscle gain, Weight loss)" required>
+            </div>
+
+            <div class="input-group">
+                <select name="intensity" required>
+                    <option value="" disabled selected>Select Workout Intensity</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+
+            <button type="submit">Generate Fitness Plan</button>
+        </form>
+
+        {% if plan %}
+        <div style="margin-top: 25px; padding: 20px; background: #f0fdf4; border-left: 6px solid #22c55e; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); max-height: 350px; overflow-y: auto;">
+            <h3 style="color: #166534; margin-bottom: 12px;">🔥 Your AI Fitness Plan is Ready!</h3>
+            <div style="white-space: pre-wrap; font-size: 15px; line-height: 1.6; color: #333;">{{ plan }}</div>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div style="margin-top: 20px; padding: 15px; background: #fef2f2; border-left: 5px solid #ef4444; color: #991b1b; border-radius: 8px;">
+            <strong>Error:</strong> {{ error }}
+        </div>
+        {% endif %}
+
+    </div> 
+</div>
+
+ </body>
+</html>
+    
